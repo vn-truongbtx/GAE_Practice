@@ -1,26 +1,34 @@
-from guestbook.models.school import School
+from guestbook.models import School, Class
+from guestbook.services import Handler
+from guestbook.services.classes import ClassHandler
 
 
-class SchoolHandler(object):
-    def fetch_all_school(self):
-        return School.query().fetch()
+class SchoolHandler(Handler):
+    model = School
 
-    def fetch_school_by_id(self, _id):
-        return School.get_by_id(int(_id))
+    def get_class_keys(self):
+        class_serializer = []
 
-    def create_school_obj(self, name, number_of_class):
-        school = School(name=name, number_of_class=int(number_of_class))
-        school_key = school.put()
-        return school_key.get()
+        for key in getattr(self.obj, 'class_keys', []):
+            class_serializer.append(ClassHandler(key.get()).serializer)
+        return class_serializer
 
-    def delete_school_obj(self, obj):
-        obj.key.delete()
+    def update_class_keys(self, data):
+        class_ids = data.pop('class_keys', None)
+        class_keys = []
+        for i in class_ids:
+            class_keys.append(Class.get_by_id(i).key)
 
-    def update_school_obj(self, obj, name, number_of_class):
-        obj.name = name
-        obj.number_of_class = int(number_of_class)
-        obj.put()
-        return obj
+        data['class_keys'] = class_keys
+        return data
 
+    def update(self, data):
+        updated_data = self.update_class_keys(data)
 
-school_handler = SchoolHandler()
+        self.obj.update(updated_data)
+
+    def create(self, data):
+        updated_data = self.update_class_keys(data)
+        entity = self.model(updated_data)
+        entity.put()
+        return SchoolHandler(entity)
