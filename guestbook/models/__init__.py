@@ -46,7 +46,7 @@ class Class(EntityModel):
 
 class School(EntityModel):
     name = ndb.StringProperty()
-    class_keys = ndb.KeyProperty(kind=Class, repeated=True)
+    class_id = ndb.KeyProperty(kind=Class, repeated=True)
     is_closed = ndb.BooleanProperty(default=False)
 
 
@@ -54,4 +54,4 @@ class City(EntityModel):
     name = ndb.StringProperty()
     population = ndb.IntegerProperty()
     gdp = ndb.FloatProperty()
-    schools = ndb.StructuredProperty(School, repeated=True)
+    schools = ndb.StructuredProperty(School)  # just one

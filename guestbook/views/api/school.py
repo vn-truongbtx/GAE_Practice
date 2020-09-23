@@ -1,27 +1,13 @@
-
 from guestbook.form.school import SchoolForm
 from guestbook.models import School
 from guestbook.services.school import SchoolHandler
-from guestbook.views.generic.detail import DetailView
-from guestbook.views.generic.edit import UpdateView, CreateView
-from guestbook.views.generic.list import ListView
+from guestbook.views.generic import GenericViewset
+from guestbook.views.generic.detail import DetailViewMixin
+from guestbook.views.generic.edit import UpdateViewMixin, CreateViewMixin, DeleteViewMixin
+from guestbook.views.generic.list import ListViewMixin
 
 
-class ListSchoolView(ListView):
+class SchoolViewset(GenericViewset, ListViewMixin, DetailViewMixin, UpdateViewMixin, CreateViewMixin, DeleteViewMixin):
     model = School
     handler = SchoolHandler
-
-
-class DetailSchoolView(DetailView):
-    model = School
-    handler = SchoolHandler
-
-
-class UpdateSchoolView(UpdateView):
     form = SchoolForm
-    handler = SchoolHandler
-
-
-class CreateSchoolView(CreateView):
-    form = SchoolForm
-    handler = SchoolHandler

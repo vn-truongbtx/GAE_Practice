@@ -11,4 +11,5 @@ class ClassHandler(Handler):
     def create(self, data):
         entity = self.model(**data)
         entity.put()
+        self.obj = entity
         return ClassHandler(entity)

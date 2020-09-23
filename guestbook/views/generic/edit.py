@@ -1,9 +1,7 @@
-from django.views.generic import View
-
 from guestbook.views.generic import JSONResponse
 
 
-class UpdateView(View):
+class UpdateViewMixin(object):
     form = None
     handler = None
 
@@ -13,22 +11,32 @@ class UpdateView(View):
             return JSONResponse(['Data is not valid'])
 
         obj_dict = form.to_dict()
-        _id = obj_dict.pop('id')
-        handler = self.handler(_id=_id)
+        id_key = kwargs.pop('id', None)
+        handler = self.handler(_id=id_key)
         handler.update(obj_dict)
         return JSONResponse(handler.serializer)
 
 
-class CreateView(View):
+class CreateViewMixin(object):
     form = None
     handler = None
 
     def post(self, request, *args, **kwargs):
         form = self.form(request.POST)
         if not form.is_valid():
-            return JSONResponse(['Data is not valid'])
+            return JSONResponse(dict(form.errors))
 
         obj_dict = form.to_dict()
         handler = self.handler()
         handler.create(obj_dict)
         return JSONResponse(handler.serializer)
+
+
+class DeleteViewMixin(object):
+    handler = None
+
+    def delete(self, request, *args, **kwargs):
+        id_key = kwargs.pop('id', None)
+        handler = self.handler(_id=int(id_key))
+        handler.delete()
+        return JSONResponse('Entity with id {} has been deleted'.format(id_key))

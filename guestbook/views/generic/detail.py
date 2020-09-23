@@ -1,13 +1,11 @@
-from django.views.generic import View
-
 from guestbook.views.generic import JSONResponse
 
 
-class DetailView(View):
+class DetailViewMixin(object):
     model = None
     handler = None
 
-    def get(self, request, *args, **kwargs):
+    def retrieve(self, request, *args, **kwargs):
         id_key = kwargs.pop('id', None)
 
         obj = self.model.get_by_id(int(id_key))

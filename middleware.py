@@ -1,3 +1,5 @@
+import json
+
 from django.http import HttpResponseBadRequest
 
 
@@ -26,3 +28,13 @@ class JSONParsingMiddleware(object):
                 request.DATA = dict(request.REQUEST)
             except ValueError as ve:
                 return HttpResponseBadRequest("Error : {0}".format(ve))
+
+        if get_contenttype(request) == 'application/json' and request.method in ['PUT', 'POST']:
+            try:
+                request.JSON = json.loads(request.body)
+            except Exception as e:
+                return HttpResponseBadRequest("Error : {0}".format(e))
+
+
+def get_contenttype(request):
+    return request.META.get('CONTENT_TYPE')
