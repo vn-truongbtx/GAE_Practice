@@ -2,6 +2,7 @@ from django.core.exceptions import ValidationError
 from google.appengine.ext.ndb import Property
 
 
+#  Using to_dict, entity.to_dict()
 class Handler(object):
     model = None
 

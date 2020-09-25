@@ -53,11 +53,11 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
-# STATIC_URL = '/static/'
+STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -71,7 +71,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -81,11 +81,10 @@ SECRET_KEY = 's!)p!b#fxuo33r1=%nudamxe#(o%(w48@b4x1te%^a$_f#6^!+'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    #     'django.template.loaders.eggs.Loader',
 )
 
-
-CSRF_TRUSTED_ORIGINS =["localhost:4200"]
+CSRF_TRUSTED_ORIGINS = ["localhost:4200"]
 
 MIDDLEWARE_CLASSES = (
     'cors.CorsMiddleware',
@@ -130,9 +129,9 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'guestbook',
+    'api_search'
 
 )
-
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 

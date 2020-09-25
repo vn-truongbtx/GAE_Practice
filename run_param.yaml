@@ -1,4 +1,5 @@
 run:
   host: localhost
   port: 8080
-  params: --host=0.0.0.0   --storage_path=~/rakumo_storage  --show_mail_body   --log_level=debug --enable_sendmail=yes --dev_appserver_log_level=debug
+  params: --host=0.0.0.0   --storage_path=~/rakumo_storage  --show_mail_body   --log_level=debug --enable_sendmail=yes --dev_appserver_log_level=debug  --clear_datastore
+  # --clear_datastore remove database previous

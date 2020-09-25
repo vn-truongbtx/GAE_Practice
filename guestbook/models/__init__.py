@@ -1,5 +1,14 @@
 from google.appengine.ext import ndb
 
+"""
+Using cursor in query fetch_page
+cursor = datastore_query.Cursor(urlsafe=cursor_str)
+
+results, cursor, more = query.fetch_page(PAGE_SIZE, start_cursor=cursor)
+
+more is is_exist cursor position in datastore
+"""
+
 
 class ModelMixin(object):
     @classmethod

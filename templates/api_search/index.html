@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>API Search</title>
+</head>
+<body>
+<h1>Current Index: {{ index }}</h1>
+<hr>
+<form action="/search/s">
+    <input value="{{ index }}" name="index" type="hidden">
+    Search: <input value="" name="search_string">
+    Offset: <input value="0" name="offset">
+    Limit: <input value="20" name="limit">
+    <input type="submit" value="Search">
+    {% block result %}
+    {% endblock %}
+</form>
+<hr>
+<form action="/search/add/" method="post">
+    <div style="display: flex;justify-items: center">
+        Document title: <input value="Title" name="document_title" style="margin-left: 40px"><br>
+    </div>
+    <div style="display: flex;justify-items: center; margin-top: 5px">
+        Document content: <textarea value="Content" name="document_content" rows="4" cols="60"
+                                    style="margin-left: 18px"></textarea><br>
+    </div>
+    <input value="{{ index }}" name="index" type="hidden">
+    <input type="submit" value="Create document">
+    {% if successful %}
+        <p>Add successfully</p>
+    {% endif %}
+</form>
+<hr>
+<form action="/search/">
+    Index: <input value="{{ index }}" name="index"><input type="submit" value="Switch">
+</form>
+</body>
+</html>
