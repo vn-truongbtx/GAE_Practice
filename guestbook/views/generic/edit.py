@@ -6,7 +6,7 @@ class UpdateViewMixin(object):
     handler = None
 
     def put(self, request, *args, **kwargs):
-        form = self.form(request.PUT)
+        form = self.form(request.JSON)
         if not form.is_valid():
             return JSONResponse(['Data is not valid'])
 
@@ -22,7 +22,7 @@ class CreateViewMixin(object):
     handler = None
 
     def post(self, request, *args, **kwargs):
-        form = self.form(request.POST)
+        form = self.form(request.JSON)
         if not form.is_valid():
             return JSONResponse(dict(form.errors))
 
